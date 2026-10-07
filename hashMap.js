@@ -21,7 +21,7 @@ export class HashMap {
   entry(bucket, key) {
     for (const entry of bucket) {
       if (entry.key === key) {
-        return bucket;
+        return entry;
       }
     }
     return null;
@@ -36,7 +36,9 @@ export class HashMap {
     }
     if (entry) {
       entry.value = value;
+      return;
     }
     bucket.push({ key, value });
   }
+  //check number of stored keys this.loadfactor * capacity <
 }
