@@ -82,9 +82,12 @@ export class HashMap {
     } else return false;
   }
   clear() {
-    for (const bucket in this.buckets) {
+    this.buckets.forEach((bucket) => {
       bucket.splice();
-    }
+    });
+    // for (const bucket in this.buckets) {
+    //   bucket.splice();
+    // }
     return;
   }
 }
