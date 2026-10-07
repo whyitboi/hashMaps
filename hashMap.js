@@ -16,8 +16,11 @@ export class HashMap {
     return hashCode;
   }
   bucket(key) {
-    const hasCode = this.hash(key);
-    return this.buckets[hasCode];
+    const index = this.hash(key);
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bounds");
+    }
+    return this.buckets[index];
   }
   checkEntry(bucket, key) {
     for (const entry of bucket) {
@@ -40,52 +43,35 @@ export class HashMap {
   }
 
   set(key, value) {
-    const index = this.hash(key);
     const bucket = this.bucket(key);
     const entry = this.checkEntry(bucket, key);
-    if (index < 0 || index >= this.buckets.length) {
-      throw new Error("Trying to access index out of bounds");
-    }
     if (entry) {
       entry.value = value;
       return;
     }
     bucket.push({ key, value });
     this.counter++;
-    //check number of stored keys this.loadfactor * this,capacity < this.counter
     if (this.counter > this.loadFactor * this.capacity) this.growMapCapacity();
   }
   get(key) {
-    const index = this.hash(key);
     const bucket = this.bucket(key);
     const entry = this.checkEntry(bucket, key);
-    if (index < 0 || index >= this.buckets.length) {
-      throw new Error("Trying to access index out of bounds");
-    }
     if (entry) {
       return entry.value;
     }
     return undefined;
   }
   has(key) {
-    const index = this.hash(key);
     const bucket = this.bucket(key);
     const entry = this.checkEntry(bucket, key);
-    if (index < 0 || index >= this.buckets.length) {
-      throw new Error("Trying to access index out of bounds");
-    }
     return entry !== null ? true : false;
   }
   length() {
     return this.counter;
   }
   remove(key) {
-    const index = this.hash(key);
     const bucket = this.bucket(key);
     const entry = this.checkEntry(bucket, key);
-    if (index < 0 || index >= this.buckets.length) {
-      throw new Error("Trying to access index out of bounds");
-    }
     if (entry) {
       bucket.splice(bucket.indexOf(entry), 1);
       this.counter--;
