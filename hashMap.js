@@ -101,12 +101,12 @@ export class HashMap {
     return keyArr;
   }
   values() {
-    const keyArr = [];
+    const valuesArr = [];
     this.buckets.forEach((bucket) => {
       bucket.forEach((entry) => {
         keyArr.push(entry.value);
       });
     });
-    return keyArr;
+    return valuesArr;
   }
 }
