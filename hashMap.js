@@ -27,6 +27,7 @@ export class HashMap {
     }
     return null;
   }
+  growMapCapacity() {}
 
   set(key, value) {
     const index = this.hash(key);
@@ -41,8 +42,9 @@ export class HashMap {
     }
     bucket.push({ key, value });
     this.counter++;
-    //check number of stored keys this.loadfactor * capacity < this.counter
-    //growMapCapacity()
+    //check number of stored keys this.loadfactor * this,capacity < this.counter
+    if ((this.counter > this.counter > this.loadfactor * this, capacity))
+      growMapCapacity();
   }
   get(key) {
     const index = this.hash(key);
@@ -83,11 +85,28 @@ export class HashMap {
   }
   clear() {
     this.buckets.forEach((bucket) => {
-      bucket.splice();
+      bucket.splice(0);
+      //can also bucket.length = 0
     });
-    // for (const bucket in this.buckets) {
-    //   bucket.splice();
-    // }
+    counter = 0;
     return;
+  }
+  keys() {
+    const keyArr = [];
+    this.buckets.forEach((bucket) => {
+      bucket.forEach((entry) => {
+        keyArr.push(entry.key);
+      });
+    });
+    return keyArr;
+  }
+  values() {
+    const keyArr = [];
+    this.buckets.forEach((bucket) => {
+      bucket.forEach((entry) => {
+        keyArr.push(entry.value);
+      });
+    });
+    return keyArr;
   }
 }
