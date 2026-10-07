@@ -2,6 +2,7 @@ export class HashMap {
   constructor() {
     this.loadFactor = 0.75;
     this.capacity = 16;
+    this.counter = 0;
     //make sure it creates empty slots for each bucket
     this.buckets = Array.from({ length: this.capacity }, () => []);
   }
@@ -15,10 +16,10 @@ export class HashMap {
     return hashCode;
   }
   bucket(key) {
-    let hasCode = this.hash(key);
+    const hasCode = this.hash(key);
     return this.buckets[hasCode];
   }
-  entry(bucket, key) {
+  checkEntry(bucket, key) {
     for (const entry of bucket) {
       if (entry.key === key) {
         return entry;
@@ -28,9 +29,9 @@ export class HashMap {
   }
 
   set(key, value) {
-    let index = this.hash(key);
-    let bucket = this.bucket(key);
-    let entry = this.entry(bucket, key);
+    const index = this.hash(key);
+    const bucket = this.bucket(key);
+    const entry = this.checkEntry(bucket, key);
     if (index < 0 || index >= this.buckets.length) {
       throw new Error("Trying to access index out of bounds");
     }
@@ -39,6 +40,39 @@ export class HashMap {
       return;
     }
     bucket.push({ key, value });
+    this.counter++;
+    //check number of stored keys this.loadfactor * capacity < this.counter
+    //growMapCapacity(this)
   }
-  //check number of stored keys this.loadfactor * capacity <
+  get(key) {
+    const index = this.hash(key);
+    const bucket = this.bucket(key);
+    const entry = this.checkEntry(bucket, key);
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bounds");
+    }
+    if (entry) {
+      return entry.value;
+    }
+    return undefined;
+  }
+  has(key) {
+    const hashCode = this.hash(key);
+    return this.buckets.includes(hashCode) ? true : false;
+  }
+  length() {
+    return this.counter;
+  }
+  remove(key) {
+    const index = this.hash(key);
+    const bucket = this.bucket(key);
+    const entry = this.checkEntry(bucket, key);
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bounds");
+    }
+    if (entry) {
+      this.buckets.pop(this.buckets[index].entry);
+      return true;
+    } else return false;
+  }
 }
