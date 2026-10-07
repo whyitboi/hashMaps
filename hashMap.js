@@ -63,11 +63,7 @@ export class HashMap {
     if (index < 0 || index >= this.buckets.length) {
       throw new Error("Trying to access index out of bounds");
     }
-    if (entry) {
-      return true;
-    } else {
-      return false;
-    }
+    return entry !== null ? true : false;
   }
   length() {
     return this.counter;
@@ -84,5 +80,11 @@ export class HashMap {
       this.counter--;
       return true;
     } else return false;
+  }
+  clear() {
+    for (const bucket in this.buckets) {
+      bucket.splice();
+    }
+    return;
   }
 }
