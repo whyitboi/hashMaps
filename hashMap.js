@@ -42,7 +42,7 @@ export class HashMap {
     bucket.push({ key, value });
     this.counter++;
     //check number of stored keys this.loadfactor * capacity < this.counter
-    //growMapCapacity(this)
+    //growMapCapacity()
   }
   get(key) {
     const index = this.hash(key);
@@ -57,8 +57,17 @@ export class HashMap {
     return undefined;
   }
   has(key) {
-    const hashCode = this.hash(key);
-    return this.buckets.includes(hashCode) ? true : false;
+    const index = this.hash(key);
+    const bucket = this.bucket(key);
+    const entry = this.checkEntry(bucket, key);
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bounds");
+    }
+    if (entry) {
+      return entry.value;
+    } else {
+      return false;
+    }
   }
   length() {
     return this.counter;
@@ -71,7 +80,8 @@ export class HashMap {
       throw new Error("Trying to access index out of bounds");
     }
     if (entry) {
-      this.buckets.pop(this.buckets[index].entry);
+      splice(bucket.indexOf(entry), 1);
+      this.counter--;
       return true;
     } else return false;
   }
