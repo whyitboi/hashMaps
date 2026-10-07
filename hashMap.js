@@ -1,7 +1,7 @@
 export class HashMap {
-  constructor() {
+  constructor(capacity = 16) {
     this.loadFactor = 0.75;
-    this.capacity = 16;
+    this.capacity = capacity;
     this.counter = 0;
     //make sure it creates empty slots for each bucket
     this.buckets = Array.from({ length: this.capacity }, () => []);
@@ -27,7 +27,15 @@ export class HashMap {
     }
     return null;
   }
-  growMapCapacity() {}
+  growMapCapacity() {
+    let oldMap = this.entries();
+    const newHashMap = new HashMap(this.capacity * 2);
+    oldMap.forEach((bucket) => {
+      bucket.forEach((entry) => {
+        newHashMap.set(entry.key, entry.value);
+      });
+    });
+  }
 
   set(key, value) {
     const index = this.hash(key);
