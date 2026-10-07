@@ -64,7 +64,7 @@ export class HashMap {
       throw new Error("Trying to access index out of bounds");
     }
     if (entry) {
-      return entry.value;
+      return true;
     } else {
       return false;
     }
@@ -80,7 +80,7 @@ export class HashMap {
       throw new Error("Trying to access index out of bounds");
     }
     if (entry) {
-      splice(bucket.indexOf(entry), 1);
+      bucket.splice(bucket.indexOf(entry), 1);
       this.counter--;
       return true;
     } else return false;
