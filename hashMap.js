@@ -20,7 +20,7 @@ export class HashMap {
   }
   entry(bucket, key) {
     for (const entry of bucket) {
-      if (bucket.key === key) {
+      if (entry.key === key) {
         return bucket;
       }
     }
@@ -30,7 +30,7 @@ export class HashMap {
   set(key, value) {
     let index = this.hash(key);
     let bucket = this.bucket(key);
-    let entry = entry(bucket, key);
+    let entry = this.entry(bucket, key);
     if (index < 0 || index >= this.buckets.length) {
       throw new Error("Trying to access index out of bounds");
     }
