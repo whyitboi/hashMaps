@@ -28,13 +28,15 @@ export class HashMap {
     return null;
   }
   growMapCapacity() {
-    let oldMap = this.entries();
+    const oldHashMap = this.entries();
     const newHashMap = new HashMap(this.capacity * 2);
-    oldMap.forEach((bucket) => {
-      bucket.forEach((entry) => {
-        newHashMap.set(entry.key, entry.value);
-      });
+    oldHashMap.forEach(([key, value]) => {
+      newHashMap.set(key, value);
     });
+    //set new (grown) hash map to this (current hash map)
+    this.capacity = newHashMap.capacity;
+    this.buckets = newHashMap.buckets;
+    this.counter = newHashMap.counter;
   }
 
   set(key, value) {
