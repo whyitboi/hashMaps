@@ -24,7 +24,7 @@ export class HashSet {
   }
   checkEntry(buckets, key) {
     if (buckets.includes(key)) {
-      return true;
+      return key;
     }
     return null;
   }
@@ -44,10 +44,8 @@ export class HashSet {
   add(key) {
     const bucket = this.bucket(key);
     const entry = this.checkEntry(bucket, key);
-    if (entry) {
-      entry.key = key;
-      return;
-    }
+    if (entry !== null) return;
+
     bucket.push(key);
     this.counter++;
     if (this.counter > this.loadFactor * this.capacity) this.growMapCapacity();
