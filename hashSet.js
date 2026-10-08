@@ -23,17 +23,15 @@ export class HashSet {
     return this.buckets[index];
   }
   checkEntry(buckets, key) {
-    for (const bucket in buckets) {
-      if (bucket.includes(key)) {
-        return bucket;
-      }
+    if (buckets.includes(key)) {
+      return true;
     }
     return null;
   }
   growMapCapacity() {
     const oldHashSet = this.keys();
     const newHashSet = new HashSet(this.capacity * 2);
-    oldHashSet.forEach(([key]) => {
+    oldHashSet.forEach((key) => {
       newHashSet.set(key);
     });
     //set new (grown) hash set to this (current hash set)
@@ -50,7 +48,7 @@ export class HashSet {
       entry.key = key;
       return;
     }
-    bucket.push({ key });
+    bucket.push(key);
     this.counter++;
     if (this.counter > this.loadFactor * this.capacity) this.growMapCapacity();
   }

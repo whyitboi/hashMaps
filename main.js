@@ -1,17 +1,21 @@
 import { HashMap } from "./hashMap.js";
+import { HashSet } from "./hashSet.js";
 
-const test = new HashMap();
+const hashMap = new HashMap();
+const hashSet = new HashSet();
 
-test.set("apple", "red");
-test.set('banana', 'yellow');
-test.set('carrot', 'orange');
-test.set('dog', 'brown');
-test.set('elephant', 'gray');
-test.set('frog', 'green');
-test.set('grape', 'purple');
-test.set('hat', 'black');
-test.set('ice cream', 'white');
-test.set('jacket', 'blue');
-test.set('kite', 'pink');
-test.set('lion', 'golden');
-console.log(test.entries());
+hashMap.set("apple", "red");
+hashMap.set("banana", "yellow");
+hashMap.set("carrot", "orange");
+hashMap.set("dog", "brown");
+hashMap.set("elephant", "gray");
+hashMap.set("frog", "green");
+hashMap.set("grape", "purple");
+hashMap.set("hat", "black");
+hashMap.set("ice cream", "white");
+hashMap.set("jacket", "blue");
+hashMap.set("kite", "pink");
+hashMap.set("lion", "golden");
+console.log("Hash Set: " + hashSet.length());
+console.log("Hash Map: ");
+console.log(hashMap.entries());
