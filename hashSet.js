@@ -22,8 +22,8 @@ export class HashSet {
     }
     return this.buckets[index];
   }
-  checkEntry(buckets, key) {
-    if (buckets.includes(key)) {
+  checkEntry(bucket, key) {
+    if (bucket.includes(key)) {
       return key;
     }
     return null;
@@ -32,7 +32,7 @@ export class HashSet {
     const oldHashSet = this.keys();
     const newHashSet = new HashSet(this.capacity * 2);
     oldHashSet.forEach((key) => {
-      newHashSet.set(key);
+      newHashSet.add(key);
     });
     //set new (grown) hash set to this (current hash set)
     this.capacity = newHashSet.capacity;
@@ -40,7 +40,6 @@ export class HashSet {
     this.counter = newHashSet.counter;
   }
 
-  //change to add(key) and combine with has(key)
   add(key) {
     const bucket = this.bucket(key);
     const entry = this.checkEntry(bucket, key);
@@ -53,7 +52,7 @@ export class HashSet {
   has(key) {
     const bucket = this.bucket(key);
     const entry = this.checkEntry(bucket, key);
-    return entry !== null ? true : false;
+    return entry !== null;
   }
 
   length() {
@@ -62,7 +61,7 @@ export class HashSet {
   remove(key) {
     const bucket = this.bucket(key);
     const entry = this.checkEntry(bucket, key);
-    if (entry) {
+    if (entry !== null) {
       bucket.splice(bucket.indexOf(entry), 1);
       this.counter--;
       return true;
@@ -80,7 +79,7 @@ export class HashSet {
     const keyArr = [];
     this.buckets.forEach((bucket) => {
       bucket.forEach((entry) => {
-        keyArr.push(entry.key);
+        keyArr.push(entry);
       });
     });
     return keyArr;
